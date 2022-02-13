@@ -1,12 +1,25 @@
-export const Home = () => {
-  const [error, checkError] = useState('')
+import {useState, useEffect} from 'react'
 
-  const topLevelFetch = async () => {
-    try {
-      const response = await fetch('https://api.github.com/orgs/BoomTownROI')
-    } catch(error) {
-      checkError('Not found')
-    } 
-  } 
-  console.log(topLevelFetch)
+export const Home = () => {
+  useEffect(() => {
+    const url = "https://api.github.com/orgs/BoomTownROI"
+    
+    const fetchData = async () => {
+      try {
+          const response = await fetch(url);
+          const json = await response.json();
+          console.log(json);
+      } catch (error) {
+          console.log("error", error);
+      }
+  };
+    fetchData()
+  }, []);
+
+
+  return(
+    <div>
+      <p>hello world</p>
+    </div>
+  )
 }
