@@ -1,9 +1,11 @@
 import {useState, useEffect} from 'react'
 
 export const Home = () => {
-  const [baseApi, setBaseApi] = useState([])
-  const[reposApi, setReposApi] = useState([])
-  const [eventsApi, setEventsApi] = useState([])
+  const [baseApi, setBaseApi] = useState({'baseApi':[]})
+  const[reposApi, setReposApi] = useState({'reposApi':[]})
+  const [eventsApi, setEventsApi] = useState({'eventsApi':[]})
+  const [repoIds, setRepoIds] = useState({'reposIds':[]})
+  const [eventIds, setEventIds] = useState({'eventIds':[]})
 
   const url = "https://api.github.com/orgs/BoomTownROI"
   const repoUrl = url + '/repos'
@@ -15,9 +17,10 @@ export const Home = () => {
   
   const getBaseData = async () => {
     try {
-        let baseResponse = await fetch(url)
-        let baseApi = await baseResponse.json()
-        setBaseApi(baseApi)
+      let baseResponse = await fetch(url)
+      let baseApi = await baseResponse.json()
+      setBaseApi({'baseApi': baseApi})
+      // console.log(baseApi)
     } catch (error) {
       console.log('error', error)
     }
@@ -25,9 +28,10 @@ export const Home = () => {
 
   const getReposData = async () => {
     try {
-        let repoResponse = await fetch(repoUrl)
-        let reposApi = await repoResponse.json()
-        setReposApi(reposApi)
+      let repoResponse = await fetch(repoUrl)
+      let reposApi = await repoResponse.json()
+      setReposApi({'reposApi': reposApi})
+      getRepoIds()
     } catch (error) {
       console.log('error', error)
     }
@@ -35,30 +39,44 @@ export const Home = () => {
 
   const getEventsData = async () => {
     try {
-        let eventsResponse = await fetch(eventsUrl)
-        let eventsApi = await eventsResponse.json()
-        setEventsApi(eventsApi)
+      let eventsResponse = await fetch(eventsUrl)
+      let eventsApi = await eventsResponse.json()
+      setEventsApi({'eventsApi': eventsApi})
+      getEventIds()
     } catch (error) {
       console.log('error', error)
     }
   }
+  
+  const getRepoIds = () => {
+    const repoIds = reposApi.map(ids => ids.id)
+    setRepoIds(repoIds)
+    return repoIds
+  }
+
+  const getEventIds = () => {
+    const eventIds = eventsApi.map(ids => ids.id)
+    setEventIds(eventIds)
+    return eventIds
+  }
 
   const failedResponse = async (site) => {
-      try {
-        const response = await fetch(site);
-    
-        console.log('status code: ', response.status);
-    
-        if (!response.ok) {
-          console.log(response);
-          throw new Error(`Error! status: ${response.status}`);
-        }  
-        const result = await response.json();
-        return result;
-      } catch (err) {
-        console.log(err);
-      }
+    try {
+      const response = await fetch(site);
+  
+      console.log('status code: ', response.status);
+  
+      if (!response.ok) {
+        console.log(response);
+        throw new Error(`Error! status: ${response.status}`);
+      }  
+      const result = await response.json();
+      return result;
+    } catch (err) {
+      console.log(err);
     }
+  }
+
   
   //     // baseApi = Object.entries(baseApi).map((e) => ( { [e[0]]: e[1] } ))
   // ideal world I would turn json object into an array, then create an array that just include the 
@@ -68,16 +86,18 @@ export const Home = () => {
     getBaseData()
     getReposData()
     getEventsData()
-    failedResponse(hooksUrl)
-    failedResponse(membersUrl)
-    failedResponse(publicMemUrl)
-    failedResponse(issuesUrl)  
+    // getIds()
+    // failedResponse(hooksUrl)
+    // failedResponse(membersUrl)
+    // failedResponse(publicMemUrl)
+    // failedResponse(issuesUrl)  
   }, []);
 
 
   return(
     <div>
       <p>hello world</p>
+      
     </div>
   )
 }
