@@ -13,7 +13,7 @@ export const Home = () => {
   const membersUrl = url + '/members{/member}'
   const publicMemUrl = url + '/public_members{/member}'
   
-  const getAllData = async () => {
+  const getBaseData = async () => {
     try {
         let baseResponse = await fetch(url)
         let baseApi = await baseResponse.json()
@@ -61,30 +61,11 @@ export const Home = () => {
     }
   
   //     // baseApi = Object.entries(baseApi).map((e) => ( { [e[0]]: e[1] } ))
-
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await fetch((`https://api.github.com/orgs/BoomTownROI/${paths[i]}`))
-  //     checkForError(response)
-  //     console.log(response)
-  //   } catch (error) {
-  //     console.log('error', error)
-  //   }
-  // }
-
-  // const checkForError = (response) => {
-  //   if (!response.ok) {
-  //     const message = `An error has occured: ${response.status}`;
-  //     throw new Error(message)
-  //   } 
-  // }
-
-
   // ideal world I would turn json object into an array, then create an array that just include the 
   //_url path. then 
   
   useEffect(() => {
-    getAllData()
+    getBaseData()
     getReposData()
     getEventsData()
     failedResponse(hooksUrl)
