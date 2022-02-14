@@ -4,18 +4,20 @@ export const Home = () => {
   const [baseApi, setBaseApi] = useState([])
   const[reposApi, setReposApi] = useState([])
   const [eventsApi, setEventsApi] = useState([])
-  const [paths, setPaths] = useState([])
-  // let url = "https://api.github.com/orgs/BoomTownROI"
-  let url = "https://api.github.com/orgs/BoomTownROI"
+
+  const url = "https://api.github.com/orgs/BoomTownROI"
   const repoUrl = url + '/repos'
   const eventsUrl = url + '/events'
+  const hooksUrl = url + '/hooks'
+  const issuesUrl = url + '/issues'
+  const membersUrl = url + '/members{/member}'
+  const publicMemUrl = url + '/public_members{/member}'
   
   const getAllData = async () => {
     try {
         let baseResponse = await fetch(url)
         let baseApi = await baseResponse.json()
         setBaseApi(baseApi)
-        console.log(baseApi)
     } catch (error) {
       console.log('error', error)
     }
@@ -26,7 +28,6 @@ export const Home = () => {
         let repoResponse = await fetch(repoUrl)
         let reposApi = await repoResponse.json()
         setReposApi(reposApi)
-        console.log(reposApi)
     } catch (error) {
       console.log('error', error)
     }
@@ -37,11 +38,27 @@ export const Home = () => {
         let eventsResponse = await fetch(eventsUrl)
         let eventsApi = await eventsResponse.json()
         setEventsApi(eventsApi)
-        console.log(eventsApi)
     } catch (error) {
       console.log('error', error)
     }
   }
+
+  const failedResponse = async (site) => {
+      try {
+        const response = await fetch(site);
+    
+        console.log('status code: ', response.status);
+    
+        if (!response.ok) {
+          console.log(response);
+          throw new Error(`Error! status: ${response.status}`);
+        }  
+        const result = await response.json();
+        return result;
+      } catch (err) {
+        console.log(err);
+      }
+    }
   
   //     // baseApi = Object.entries(baseApi).map((e) => ( { [e[0]]: e[1] } ))
 
@@ -70,14 +87,10 @@ export const Home = () => {
     getAllData()
     getReposData()
     getEventsData()
-    // getTopLevelData()
-    // fetchPaths()
-    // console.log(filterPaths())
-    // mapDataUrls()
-    // console.log(baseApi)
-    // arrayifyData()
-
-  
+    failedResponse(hooksUrl)
+    failedResponse(membersUrl)
+    failedResponse(publicMemUrl)
+    failedResponse(issuesUrl)  
   }, []);
 
 
