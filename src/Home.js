@@ -121,7 +121,6 @@ export const Home = () => {
 
   return(
     <section>
-      <h1>BoomTown Technical Assessment</h1>
       <div className='btn-flex'>
         <button className='btn' onClick={handleRepoClick}><span>See Repo IDs</span></button>
         <button className='btn' onClick={handleEventsClick}><span>See Event IDs</span></button>
