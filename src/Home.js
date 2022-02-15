@@ -1,12 +1,14 @@
 import {useState, useEffect} from 'react'
 
 export const Home = () => {
-  const [baseApi, setBaseApi] = useState({'baseApi':[]})
+  const [baseApi, setBaseApi] = useState([])
   const[reposApi, setReposApi] = useState([])
   const [eventsApi, setEventsApi] = useState([])
   const [repoIds, setRepoIds] = useState([])
   const [eventIds, setEventIds] = useState([])
-  const [dateVerification, setDateVerification] = useState('')
+  const [dateVerification, setDateVerification] = useState(false)
+  const [repoVerfication, setRepoVerification] = useState(false)
+  const [selectId, setSelectId] = useState(false)
 
   const url = "https://api.github.com/orgs/BoomTownROI"
   const repoUrl = url + '/repos'
@@ -20,8 +22,9 @@ export const Home = () => {
     try {
       let baseResponse = await fetch(url)
       let baseApi = await baseResponse.json()
-      setBaseApi({'baseApi': baseApi})
-      // console.log(baseApi)
+      setBaseApi(baseApi)
+      verifyDates()
+      verifyRepoCount()
     } catch (error) {
       console.log('error', error)
     }
@@ -32,7 +35,8 @@ export const Home = () => {
       let repoResponse = await fetch(repoUrl)
       let reposApi = await repoResponse.json()
       setReposApi(reposApi)
-      getRepoIds()
+      // handleClick()
+      // getRepoIds()
     } catch (error) {
       console.log('error', error)
     }
@@ -59,13 +63,6 @@ export const Home = () => {
     setEventIds(eventIds)
   }
 
-  const verifyDates = () => {
-    let originalCreationDate = new Data(baseApi.created_at)
-    let updatedDate = new Data(baseApi.updated_at)
-
-    (originalCreationDate < updatedDate) ? true : false
-  }
-
   const failedResponse = async (site) => {
     try {
       const response = await fetch(site);
@@ -83,10 +80,30 @@ export const Home = () => {
     }
   }
 
-  
-  //     // baseApi = Object.entries(baseApi).map((e) => ( { [e[0]]: e[1] } ))
-  // ideal world I would turn json object into an array, then create an array that just include the 
-  //_url path. then 
+  const verifyDates = () => {
+    let originalCreationDate = new Date(baseApi.created_at)
+    let updatedDate = new Date(baseApi.updated_at)
+    if (originalCreationDate < updatedDate) {
+      setDateVerification(true)
+    }
+  }
+
+  const verifyRepoCount = () => {
+    let topLevelRepoCount = baseApi.public_repos
+    let reposCount = reposApi.length
+    if (topLevelRepoCount === reposCount) {
+      setRepoVerification(true)
+    } 
+  }
+
+
+  const handleClick = (event) => {
+      setSelectId(true)
+      getRepoIds()
+  }
+
+  // const handleEvents
+
   
   useEffect(() => {
     getBaseData()
@@ -96,13 +113,28 @@ export const Home = () => {
     // failedResponse(membersUrl)
     // failedResponse(publicMemUrl)
     // failedResponse(issuesUrl)  
-  }, []);
-
+  }, [baseApi]);
 
   return(
-    <div>
-      <p>hello world</p>
-      
-    </div>
+    <section>
+      <h1>BoomTown Technical Assessment</h1>
+      <div className='btn-flex'>
+        <button className='btn' onClick={handleClick}>See Repo IDs</button>
+        <button className='btn'>See Event IDs</button>
+      </div>
+      <div>
+      {selectId && repoIds && 
+        <ul className='repoIds'>
+          {repoIds.map(repo => (<li key={repo}>{repo}</li>))}</ul> }
+      </div>
+      <div className='verify'>
+        {dateVerification && <p>Updated at date later than created at date.</p>}
+        {!dateVerification && <p>Update at date earlier than created at date</p>}
+      </div>
+      <div>
+        {repoVerfication && <p>Repo counts match!</p>}
+        {!repoVerfication && <p>Repo counts don't match!</p>}
+      </div>
+    </section>
   )
 }
