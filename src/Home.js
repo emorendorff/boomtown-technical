@@ -2,10 +2,11 @@ import {useState, useEffect} from 'react'
 
 export const Home = () => {
   const [baseApi, setBaseApi] = useState({'baseApi':[]})
-  const[reposApi, setReposApi] = useState({'reposApi':[]})
-  const [eventsApi, setEventsApi] = useState({'eventsApi':[]})
-  const [repoIds, setRepoIds] = useState({'reposIds':[]})
-  const [eventIds, setEventIds] = useState({'eventIds':[]})
+  const[reposApi, setReposApi] = useState([])
+  const [eventsApi, setEventsApi] = useState([])
+  const [repoIds, setRepoIds] = useState([])
+  const [eventIds, setEventIds] = useState([])
+  const [dateVerification, setDateVerification] = useState('')
 
   const url = "https://api.github.com/orgs/BoomTownROI"
   const repoUrl = url + '/repos'
@@ -30,7 +31,7 @@ export const Home = () => {
     try {
       let repoResponse = await fetch(repoUrl)
       let reposApi = await repoResponse.json()
-      setReposApi({'reposApi': reposApi})
+      setReposApi(reposApi)
       getRepoIds()
     } catch (error) {
       console.log('error', error)
@@ -41,23 +42,28 @@ export const Home = () => {
     try {
       let eventsResponse = await fetch(eventsUrl)
       let eventsApi = await eventsResponse.json()
-      setEventsApi({'eventsApi': eventsApi})
+      setEventsApi(eventsApi)
       getEventIds()
     } catch (error) {
       console.log('error', error)
     }
   }
-  
+
   const getRepoIds = () => {
     const repoIds = reposApi.map(ids => ids.id)
     setRepoIds(repoIds)
-    return repoIds
   }
 
   const getEventIds = () => {
-    const eventIds = eventsApi.map(ids => ids.id)
+    const eventIds = eventsApi.map(ids => parseInt(ids.id))
     setEventIds(eventIds)
-    return eventIds
+  }
+
+  const verifyDates = () => {
+    let originalCreationDate = new Data(baseApi.created_at)
+    let updatedDate = new Data(baseApi.updated_at)
+
+    (originalCreationDate < updatedDate) ? true : false
   }
 
   const failedResponse = async (site) => {
@@ -86,7 +92,6 @@ export const Home = () => {
     getBaseData()
     getReposData()
     getEventsData()
-    // getIds()
     // failedResponse(hooksUrl)
     // failedResponse(membersUrl)
     // failedResponse(publicMemUrl)
