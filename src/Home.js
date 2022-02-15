@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react'
+import './home.css'
 
 export const Home = () => {
   const [baseApi, setBaseApi] = useState([])
@@ -35,8 +36,7 @@ export const Home = () => {
       let repoResponse = await fetch(repoUrl)
       let reposApi = await repoResponse.json()
       setReposApi(reposApi)
-      // handleRepoClick()
-      // getRepoIds()
+      getRepoIds()
     } catch (error) {
       console.log('error', error)
     }
@@ -99,13 +99,13 @@ export const Home = () => {
 
   const handleRepoClick = () => {
       setSelectId(true)
-      getRepoIds()
-      setSelectId(false)
+      // getRepoIds()
+      // setSelectId(false)
   }
 
   const handleEventsClick = () => {
     setSelectId(true)
-    getEventIds()
+    // getEventIds()
   }
 
   
@@ -123,14 +123,14 @@ export const Home = () => {
     <section>
       <h1>BoomTown Technical Assessment</h1>
       <div className='btn-flex'>
-        <button className='btn' onClick={handleRepoClick}>See Repo IDs</button>
-        <button className='btn' onClick={handleEventsClick}>See Event IDs</button>
+        <button className='btn' onClick={handleRepoClick}><span>See Repo IDs</span></button>
+        <button className='btn' onClick={handleEventsClick}><span>See Event IDs</span></button>
       </div>
       <div>
-        {selectId && repoIds && <ul className='ids-display'>{repoIds.map(repo => (<li key={repo}>{repo}</li>))}</ul> }
+        {selectId && repoIds && <ul className='ids-display'>{repoIds.map(repo => (<li key={repo}>ID: {repo}</li>))}</ul> }
       </div>
       <div>
-        {selectId && eventIds && <ul className='ids-display'>{eventIds.map(evt => (<li key={evt}>{evt}</li>))}</ul>}
+        {selectId && eventIds && <ul className='ids-display'>{eventIds.map(evt => (<li key={evt}>ID: {evt}</li>))}</ul>}
       </div>
       <div className='verify'>
         {dateVerification && <p>Updated at date later than created at date.</p>}
