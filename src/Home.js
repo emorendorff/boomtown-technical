@@ -35,7 +35,7 @@ export const Home = () => {
       let repoResponse = await fetch(repoUrl)
       let reposApi = await repoResponse.json()
       setReposApi(reposApi)
-      // handleClick()
+      // handleRepoClick()
       // getRepoIds()
     } catch (error) {
       console.log('error', error)
@@ -97,12 +97,16 @@ export const Home = () => {
   }
 
 
-  const handleClick = (event) => {
+  const handleRepoClick = () => {
       setSelectId(true)
       getRepoIds()
+      setSelectId(false)
   }
 
-  // const handleEvents
+  const handleEventsClick = () => {
+    setSelectId(true)
+    getEventIds()
+  }
 
   
   useEffect(() => {
@@ -119,13 +123,14 @@ export const Home = () => {
     <section>
       <h1>BoomTown Technical Assessment</h1>
       <div className='btn-flex'>
-        <button className='btn' onClick={handleClick}>See Repo IDs</button>
-        <button className='btn'>See Event IDs</button>
+        <button className='btn' onClick={handleRepoClick}>See Repo IDs</button>
+        <button className='btn' onClick={handleEventsClick}>See Event IDs</button>
       </div>
       <div>
-      {selectId && repoIds && 
-        <ul className='repoIds'>
-          {repoIds.map(repo => (<li key={repo}>{repo}</li>))}</ul> }
+        {selectId && repoIds && <ul className='ids-display'>{repoIds.map(repo => (<li key={repo}>{repo}</li>))}</ul> }
+      </div>
+      <div>
+        {selectId && eventIds && <ul className='ids-display'>{eventIds.map(evt => (<li key={evt}>{evt}</li>))}</ul>}
       </div>
       <div className='verify'>
         {dateVerification && <p>Updated at date later than created at date.</p>}
