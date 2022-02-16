@@ -27,9 +27,9 @@ export const Home = () => {
     try {
       let baseResponse = await fetch(url)
       let baseApi = await baseResponse.json()
-      setBaseApi(baseApi)
       verifyDates()
       verifyRepoCount()
+      setBaseApi(baseApi)
     } catch (error) {
       console.log('error', error)
     }
@@ -73,7 +73,7 @@ export const Home = () => {
   const failedResponse = async (site) => {
     try {
       const response = await fetch(site);
-      console.log('status code: ', response.status);
+      console.log('Sorry, somethings not working. Status Code: ', response.status);
       if (!response.ok) {
         console.log(response);
         throw new Error(`Error! status: ${response.status}`);
@@ -122,10 +122,10 @@ export const Home = () => {
     getBaseData()
     getReposData()
     getEventsData()
-    // failedResponse(hooksUrl)
-    // failedResponse(membersUrl)
-    // failedResponse(publicMemUrl)
-    // failedResponse(issuesUrl)  
+    failedResponse(hooksUrl)
+    failedResponse(membersUrl)
+    failedResponse(publicMemUrl)
+    failedResponse(issuesUrl)  
   }, []);
 
   return(
