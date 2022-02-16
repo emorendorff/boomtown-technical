@@ -36,7 +36,7 @@ export const Home = () => {
       let repoResponse = await fetch(repoUrl)
       let reposApi = await repoResponse.json()
       setReposApi(reposApi)
-      getRepoIds()
+      // getRepoIds()
     } catch (error) {
       console.log('error', error)
     }
@@ -47,7 +47,7 @@ export const Home = () => {
       let eventsResponse = await fetch(eventsUrl)
       let eventsApi = await eventsResponse.json()
       setEventsApi(eventsApi)
-      getEventIds()
+      // getEventIds()
     } catch (error) {
       console.log('error', error)
     }
@@ -99,13 +99,13 @@ export const Home = () => {
 
   const handleRepoClick = () => {
       setSelectId(true)
-      // getRepoIds()
+      getRepoIds()
       // setSelectId(false)
   }
 
   const handleEventsClick = () => {
     setSelectId(true)
-    // getEventIds()
+    getEventIds()
   }
 
   
@@ -120,22 +120,24 @@ export const Home = () => {
   }, [baseApi]);
 
   return(
-    <section>
+    <section className='home-container'>
       <div className='btn-flex'>
         <button className='btn' onClick={handleRepoClick}><span>See Repo IDs</span></button>
         <button className='btn' onClick={handleEventsClick}><span>See Event IDs</span></button>
       </div>
-      <div>
-        {selectId && repoIds && <ul className='ids-display'>{repoIds.map(repo => (<li key={repo}>ID: {repo}</li>))}</ul> }
+      <div className='id-formating'>
+        {selectId && repoIds && <ul className='ids-display'>{repoIds.map(repo => (<li key={repo}><span>Repo ID:</span>{repo}</li>))}</ul> }
       </div>
       <div>
-        {selectId && eventIds && <ul className='ids-display'>{eventIds.map(evt => (<li key={evt}>ID: {evt}</li>))}</ul>}
+        {selectId && eventIds && <ul className='ids-display'>{eventIds.map(evt => (<li key={evt}><span>Event Repo ID:</span> {evt}</li>))}</ul>}
       </div>
       <div className='verify'>
+        <h2>Date Verification</h2>
         {dateVerification && <p>Updated at date later than created at date.</p>}
         {!dateVerification && <p>Update at date earlier than created at date</p>}
       </div>
       <div>
+        <h2>Repo Verification</h2>
         {repoVerfication && <p>Repo counts match!</p>}
         {!repoVerfication && <p>Repo counts don't match!</p>}
       </div>

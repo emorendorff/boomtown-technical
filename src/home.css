@@ -1,18 +1,27 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  overflow: scroll;
+}
 
-
+.btn-flex {
+  padding-top: 3em;
+  display: flex;
+  justify-content: center;
+}
 .btn {
   text-align: center;
   cursor: pointer;
-  font-size:24px;
+  font-size:20px;
   margin: 0 0 0 100px;
   border-radius: 4px;
-  background-color:#d35400;
+  background-color:#1F5C1C;
   color: white;
   border: none;
   padding: 20px;
-  width: 200px;
+  width: 12em;
   transition: all 0.5s;
- 
 }
 
 
@@ -39,4 +48,12 @@
 .btn:hover span:after {
   opacity: 1;
   right: 0;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li span {
+  font-weight: bold;
 }
