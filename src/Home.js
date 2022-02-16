@@ -2,6 +2,8 @@ import {useState, useEffect} from 'react'
 import './home.css'
 
 export const Home = () => {
+// Hooks to set all state in app
+
   const [baseApi, setBaseApi] = useState([])
   const[reposApi, setReposApi] = useState([])
   const [eventsApi, setEventsApi] = useState([])
@@ -11,6 +13,7 @@ export const Home = () => {
   const [repoVerfication, setRepoVerification] = useState(false)
   const [selectId, setSelectId] = useState(false)
 
+// Global variables
   const url = "https://api.github.com/orgs/BoomTownROI"
   const repoUrl = url + '/repos'
   const eventsUrl = url + '/events'
@@ -19,6 +22,7 @@ export const Home = () => {
   const membersUrl = url + '/members{/member}'
   const publicMemUrl = url + '/public_members{/member}'
   
+  // Access top level api
   const getBaseData = async () => {
     try {
       let baseResponse = await fetch(url)
@@ -31,6 +35,7 @@ export const Home = () => {
     }
   }
 
+// Access repos level api
   const getReposData = async () => {
     try {
       let repoResponse = await fetch(repoUrl)
@@ -41,6 +46,7 @@ export const Home = () => {
     }
   }
 
+// Access events level api
   const getEventsData = async () => {
     try {
       let eventsResponse = await fetch(eventsUrl)
@@ -51,22 +57,23 @@ export const Home = () => {
     }
   }
 
+// Iterate over repo api and map ids and set state 
   const getRepoIds = () => {
     const repoIds = reposApi.map(ids => ids.id)
     setRepoIds(repoIds)
   }
 
+// Iterate over events api and map ids and set state
   const getEventIds = () => {
     const eventIds = eventsApi.map(ids => parseInt(ids.id))
     setEventIds(eventIds)
   }
 
+// Create 404 errors in console for failed urls
   const failedResponse = async (site) => {
     try {
       const response = await fetch(site);
-  
       console.log('status code: ', response.status);
-  
       if (!response.ok) {
         console.log(response);
         throw new Error(`Error! status: ${response.status}`);
@@ -78,9 +85,12 @@ export const Home = () => {
     }
   }
 
+
   const verifyDates = () => {
+  // Format creation and updated date to compare
     let originalCreationDate = new Date(baseApi.created_at)
     let updatedDate = new Date(baseApi.updated_at)
+  // Create conditional and set state if original creation date is before the updated date
     if (originalCreationDate < updatedDate) {
       setDateVerification(true)
     }
@@ -89,16 +99,19 @@ export const Home = () => {
   const verifyRepoCount = () => {
     let topLevelRepoCount = baseApi.public_repos
     let reposCount = reposApi.length
+  // Create conditional and set state if public_repos and repos api array length are equal
     if (topLevelRepoCount === reposCount) {
       setRepoVerification(true)
     } 
   }
 
+  // Click handler for repo button
   const handleRepoClick = () => {
       setSelectId(true)
       getRepoIds()
   }
 
+ // Click handler for events button
   const handleEventsClick = () => {
     setSelectId(true)
     getEventIds()
