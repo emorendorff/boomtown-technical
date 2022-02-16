@@ -36,7 +36,6 @@ export const Home = () => {
       let repoResponse = await fetch(repoUrl)
       let reposApi = await repoResponse.json()
       setReposApi(reposApi)
-      // getRepoIds()
     } catch (error) {
       console.log('error', error)
     }
@@ -47,7 +46,6 @@ export const Home = () => {
       let eventsResponse = await fetch(eventsUrl)
       let eventsApi = await eventsResponse.json()
       setEventsApi(eventsApi)
-      // getEventIds()
     } catch (error) {
       console.log('error', error)
     }
@@ -96,11 +94,9 @@ export const Home = () => {
     } 
   }
 
-
   const handleRepoClick = () => {
       setSelectId(true)
       getRepoIds()
-      // setSelectId(false)
   }
 
   const handleEventsClick = () => {
@@ -117,7 +113,7 @@ export const Home = () => {
     // failedResponse(membersUrl)
     // failedResponse(publicMemUrl)
     // failedResponse(issuesUrl)  
-  }, [baseApi]);
+  }, []);
 
   return(
     <section className='home-container'>
