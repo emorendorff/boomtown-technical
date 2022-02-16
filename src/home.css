@@ -68,3 +68,13 @@ li {
 li span {
   font-weight: bold;
 }
+
+.good {
+  color: #1F5C1C;
+  font-weight: bold;
+}
+
+.alert {
+  color: red;
+  font-weight: bold;
+}

@@ -127,10 +127,8 @@ export const Home = () => {
       </div>
       <div className='verify'>
         <h2>Date Verification</h2>
-        {dateVerification && <p>Updated at date later than created at date.</p>}
-        {!dateVerification && <p>Update at date earlier than created at date</p>}
-      </div>
-      <div>
+        {dateVerification && <p>Updated at date <span className='good'>later</span> than created at date.</p>}
+        {!dateVerification && <p>Update at date <span className='alert'>earlier</span> than created at date</p>}
         <h2>Repo Verification</h2>
         {repoVerfication && <p>Repo counts match!</p>}
         {!repoVerfication && <p>Repo counts don't match!</p>}
