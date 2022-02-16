@@ -1,10 +1,9 @@
 import './header.css'
 
 
-export const Header = (baseApi) => {
+export const Header = () => {
   return (
-    <header class='header-container'>
-      <a href='https://avatars.githubusercontent.com/u/1214096?v=4' className='logo'></a>
+    <header className='header-container'>
       <h1>BoomTown Technical Assessment</h1>
     </header>
   )
