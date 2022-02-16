@@ -89,6 +89,7 @@ export const Home = () => {
   const verifyDates = () => {
   // Format creation and updated date to compare
     let originalCreationDate = new Date(baseApi.created_at)
+    console.log(originalCreationDate)
     let updatedDate = new Date(baseApi.updated_at)
   // Create conditional and set state if original creation date is before the updated date
     if (originalCreationDate < updatedDate) {
@@ -121,11 +122,7 @@ export const Home = () => {
   useEffect(() => {
     getBaseData()
     getReposData()
-    getEventsData()
-    failedResponse(hooksUrl)
-    failedResponse(membersUrl)
-    failedResponse(publicMemUrl)
-    failedResponse(issuesUrl)  
+    getEventsData() 
   }, []);
 
   return(
