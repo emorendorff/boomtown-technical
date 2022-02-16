@@ -127,8 +127,6 @@ export const Home = () => {
       </div>
       <div className='id-formating'>
         {selectId && repoIds && <ul className='ids-display'>{repoIds.map(repo => (<li key={repo}><span>Repo ID:</span>{repo}</li>))}</ul> }
-      </div>
-      <div>
         {selectId && eventIds && <ul className='ids-display'>{eventIds.map(evt => (<li key={evt}><span>Event Repo ID:</span> {evt}</li>))}</ul>}
       </div>
       <div className='verify'>

@@ -50,8 +50,19 @@
   right: 0;
 }
 
+.id-formating {
+  display: flex;
+  justify-content: space-around;
+} 
+
 ul {
   list-style-type: none;
+  padding: .5em;
+}
+
+li {
+  padding: 1em;
+  border: solid;
 }
 
 li span {
