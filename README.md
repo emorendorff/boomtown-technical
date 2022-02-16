@@ -1,5 +1,7 @@
 # BoomTown Technical Assessment
 
+![technicalAssessment](https://user-images.githubusercontent.com/77934658/154186239-03d6de2d-70e8-4657-99ec-1c28d3b40b62.gif)
+
 ## Requirements:
 Using the GitHub API and your language of choice, pull top-level details for the BoomTownROI organization at:
 https://api.github.com/orgs/boomtownroi
